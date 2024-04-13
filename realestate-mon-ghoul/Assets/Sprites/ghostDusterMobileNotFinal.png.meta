@@ -156,7 +156,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ghostDusterMobileNotFinal_0: -5727046537482909112
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
