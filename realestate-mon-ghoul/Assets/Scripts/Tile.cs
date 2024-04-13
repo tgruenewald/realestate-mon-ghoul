@@ -7,6 +7,8 @@ public class Tile : MonoBehaviour {
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private bool isSet = false;
     [SerializeField] private Color _originalColor;
+    [SerializeField] private SpriteRenderer forSale;
+    [SerializeField] private SpriteRenderer ghost;
 
     public void Init(bool isOffset) {
         Debug.Log("Offset " + isOffset);
@@ -28,14 +30,21 @@ public class Tile : MonoBehaviour {
     private void OnMouseDown()
     {
         Debug.Log("mouse down");
+        isSet = !isSet;
         if (isSet)
         {
-            _renderer.color = _originalColor;
-            isSet = false;
+            // Color alpha = forSale.color;
+            // alpha.a = 1f;
+            // forSale.color = alpha;
+            forSale.enabled = true;
+            ghost.enabled = true;
         } else
         {
-            _renderer.color = Color.red;
-            isSet = true;
+            // Color alpha = forSale.color;
+            // alpha.a = 0f;
+            // forSale.color = alpha; 
+            forSale.enabled = false;           
+            ghost.enabled = false;
         }
         
         
