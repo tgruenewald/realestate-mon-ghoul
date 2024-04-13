@@ -19,7 +19,7 @@ public class Tile : MonoBehaviour {
     [SerializeField] public bool houseForSale = false;
     [SerializeField] public bool houseIsHaunted = false;
     [SerializeField] public bool youOwnHouse = false;
-    [SerializeField] private GameObject housePrice;
+    [SerializeField] public GameObject housePrice;
 
     public void Init(bool isOffset, int x, int y, GameState gameState) {
         Debug.Log("Offset " + isOffset);
@@ -51,11 +51,13 @@ public class Tile : MonoBehaviour {
         GameState myGamesState = GameObject.Find("GameState").GetComponent<GameState>();
         Debug.Log("yes game state: " + myGamesState);
         Debug.Log("yes: " + myGamesState.getAddressX() + ", " + myGamesState.getAddressY());
+        housePrice.GetComponent<TMP_Text>().text = "x";
         if (myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale)
         {
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale = false;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).youOwnHouse = true;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseIsHaunted = false;
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).housePrice.GetComponent<TMP_Text>().text = "Rent";
         }
         myGamesState.deductFunds(myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseCost);
 
@@ -81,6 +83,7 @@ public class Tile : MonoBehaviour {
             if (onlyInactive.Length > 0)
             {
                 onlyInactive[0].gameObject.SetActive(true);
+                return;
             }
         }
 
@@ -94,7 +97,8 @@ public class Tile : MonoBehaviour {
             // alpha.a = 1f;
             // forSale.color = alpha;
             forSale.enabled = true;
-            housePrice.GetComponent<TMP_Text>().text = "foo";
+            housePrice.GetComponent<TMP_Text>().text = "" + houseCost;
+            houseForSale = true;
             ghost.enabled = true;
             houseForSale = true;
         } else
