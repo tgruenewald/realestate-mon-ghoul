@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 81b838325ac781b4e8219dd251acbe38
+guid: 013f9a8980a1bec41bc3ea29c44dd6fe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2706955538782980054
-    second: coinNotFinal_0
+      213: 8471889325289056870
+    second: houseNotFinal_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,30 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: coinNotFinal_0
+      name: houseNotFinal_0
       rect:
         serializedVersion: 2
-        x: 265
-        y: 75
-        width: 453
-        height: 651
+        x: 12
+        y: 111
+        width: 760
+        height: 686
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2870109746fe6ad0800000000000000
-      internalID: -2706955538782980054
+      spriteID: 66a27429472329570800000000000000
+      internalID: 8471889325289056870
       vertices: []
       indices: 
       edges: []
@@ -156,8 +143,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      coinNotFinal_0: -2706955538782980054
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

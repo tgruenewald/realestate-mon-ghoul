@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 81b838325ac781b4e8219dd251acbe38
+guid: d2f4fb2a1e84304429cc8912235e6a9e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2706955538782980054
-    second: coinNotFinal_0
+      213: -6455751701949079769
+    second: ghostNotFinal_0
+  - first:
+      213: 4223973955052922896
+    second: ghostNotFinal_1
+  - first:
+      213: -5471818277405353616
+    second: ghostNotFinal_2
+  - first:
+      213: -3650107260196346350
+    second: ghostNotFinal_3
+  - first:
+      213: -8358829644772008187
+    second: ghostNotFinal_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,30 +121,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: coinNotFinal_0
+      name: ghostNotFinal_0
       rect:
         serializedVersion: 2
-        x: 265
-        y: 75
-        width: 453
-        height: 651
+        x: 115
+        y: 388
+        width: 200
+        height: 301
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +139,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2870109746fe6ad0800000000000000
-      internalID: -2706955538782980054
+      spriteID: 72f9337f7009866a0800000000000000
+      internalID: -6455751701949079769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ghostNotFinal_1
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 682
+        width: 25
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0186e6bbee19e9a30800000000000000
+      internalID: 4223973955052922896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ghostNotFinal_2
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 684
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07993c384423014b0800000000000000
+      internalID: -5471818277405353616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ghostNotFinal_3
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 671
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2162ce339c6385dc0800000000000000
+      internalID: -3650107260196346350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ghostNotFinal_4
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 655
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f1c5d99b87ffb80800000000000000
+      internalID: -8358829644772008187
       vertices: []
       indices: 
       edges: []
@@ -156,8 +239,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      coinNotFinal_0: -2706955538782980054
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

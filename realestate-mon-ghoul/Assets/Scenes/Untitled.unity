@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: _cam
       value: 
       objectReference: {fileID: 108305106}
+    - target: {fileID: 1380735455121565034, guid: ce284e46483533d43a59e43ebddffd04, type: 3}
+      propertyPath: _tilePrefab
+      value: 
+      objectReference: {fileID: 3786065281354596944, guid: b577bbe890b275c498e27e5944e26f25, type: 3}
     - target: {fileID: 5465005847997330408, guid: ce284e46483533d43a59e43ebddffd04, type: 3}
       propertyPath: m_Name
       value: Grid
