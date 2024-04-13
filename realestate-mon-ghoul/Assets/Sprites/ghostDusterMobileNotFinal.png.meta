@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 013f9a8980a1bec41bc3ea29c44dd6fe
+guid: 34bffc19280e65949bf5d6b6c7d14b3c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8471889325289056870
-    second: houseNotFinal_0
+      213: -5727046537482909112
+    second: ghostDusterMobileNotFinal_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: houseNotFinal_0
+      name: ghostDusterMobileNotFinal_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 111
-        width: 760
-        height: 686
+        x: 76
+        y: 39
+        width: 625
+        height: 333
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 66a27429472329570800000000000000
-      internalID: 8471889325289056870
+      spriteID: 84a433174817580b0800000000000000
+      internalID: -5727046537482909112
       vertices: []
       indices: 
       edges: []
@@ -156,8 +156,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      houseNotFinal_0: 8471889325289056870
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
