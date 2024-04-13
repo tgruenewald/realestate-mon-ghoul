@@ -22,4 +22,9 @@ public class Tile : MonoBehaviour {
         //_highlight.SetActive(false);
         Debug.Log("Mouse exit!");
     }
+
+    private void OnMouseDown()
+    {
+        //_highlight.SetActive(true);
+    }
 }
