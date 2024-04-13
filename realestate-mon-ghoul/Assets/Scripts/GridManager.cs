@@ -10,6 +10,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tile _tilePrefab;
 
     [SerializeField] private Transform _cam;
+    [SerializeField] private GameState _gameState;
  
     private Dictionary<Vector2, Tile> _tiles;
 
@@ -29,7 +30,7 @@ public class GridManager : MonoBehaviour
                 spawnedTile.name = $"Tile {x} {y}";
 
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
-                spawnedTile.Init(isOffset);
+                spawnedTile.Init(isOffset, x, y, _gameState);
 
 
                 _tiles[new Vector2(x, y)] = spawnedTile;

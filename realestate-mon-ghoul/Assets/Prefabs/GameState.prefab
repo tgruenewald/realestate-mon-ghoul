@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5465005847997330408
+--- !u!1 &9080745289339180324
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8631613604862836656}
-  - component: {fileID: 1380735455121565034}
+  - component: {fileID: 936615607804429511}
+  - component: {fileID: 457625179029741174}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: GameState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8631613604862836656
+--- !u!4 &936615607804429511
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5465005847997330408}
+  m_GameObject: {fileID: 9080745289339180324}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7955713, y: 9.604959, z: -0.23462875}
+  m_LocalPosition: {x: -0.016615683, y: 3.9915178, z: 0.00027187937}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1380735455121565034
+--- !u!114 &457625179029741174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5465005847997330408}
+  m_GameObject: {fileID: 9080745289339180324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59c577a5d6098904e933f291b39e200f, type: 3}
+  m_Script: {fileID: 11500000, guid: b7006021f65a05f4887fbf5563f8ac88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 10
-  _height: 10
-  _tilePrefab: {fileID: 3786065281354596944, guid: b577bbe890b275c498e27e5944e26f25, type: 3}
-  _cam: {fileID: 0}
+  funds: 0
+  houseAddressX: 0
+  houseAddressY: 0
