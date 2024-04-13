@@ -8,6 +8,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private int funds = 0;
     [SerializeField] private int houseAddressX;
     [SerializeField] private int houseAddressY;
+    [SerializeField] private int ghostLevel = 0;
     private Dictionary<Vector2, Tile> _tiles;
 
     // Start is called before the first frame update
@@ -26,6 +27,20 @@ public class GameState : MonoBehaviour
         
     }
 
+    public void setGhostLevel(int level)
+    {
+        ghostLevel = level;
+    }
+
+    public int getGhostLevel()
+    {
+        return ghostLevel;
+    }
+
+    public void resetGhostLevel()
+    {
+        ghostLevel = 0;
+    }
     public Tile getTile(int x, int y)
     {
         return _tiles[new Vector2 (x, y)];

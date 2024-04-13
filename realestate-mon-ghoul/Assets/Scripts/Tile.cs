@@ -51,7 +51,7 @@ public class Tile : MonoBehaviour {
         GameState myGamesState = GameObject.Find("GameState").GetComponent<GameState>();
         Debug.Log("yes game state: " + myGamesState);
         Debug.Log("yes: " + myGamesState.getAddressX() + ", " + myGamesState.getAddressY());
-        housePrice.GetComponent<TMP_Text>().text = "x";
+        housePrice.GetComponent<TMP_Text>().text = "";
         if (myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale)
         {
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale = false;
@@ -74,9 +74,7 @@ public class Tile : MonoBehaviour {
 
     private void OnMouseDown()
     {
-        Debug.Log("mouse down now");
-        _gameState.setAddress(x, y);
-        isSet = !isSet;
+        Debug.Log("mouse down now2");
         if (houseForSale)
         {
             ConfirmationWindow[] onlyInactive = FindObjectsByType<ConfirmationWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
@@ -86,6 +84,18 @@ public class Tile : MonoBehaviour {
                 return;
             }
         }
+        if (_gameState.getGhostLevel() == 0 )
+        {
+            Debug.Log("ghost level is zero");
+            return;
+        }
+
+        // TODO: I'll need to use the ghost level to set a different sprite
+        _gameState.resetGhostLevel();
+
+        _gameState.setAddress(x, y);
+        isSet = !isSet;
+
 
 
 

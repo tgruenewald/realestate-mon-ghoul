@@ -23,6 +23,7 @@ public class MoneyHandler : MonoBehaviour
 
     }
     public void PurchaseGhost(int price){
+        gameState.setGhostLevel(price);
         gameState.deductFunds(price);
         moneyAmount.text = gameState.getFunds().ToString();
     }
