@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour {
     [SerializeField] private Color _baseColor, _offsetColor;
@@ -13,6 +15,11 @@ public class Tile : MonoBehaviour {
     [SerializeField] private ConfirmationWindow confirmationWindow;
     [SerializeField] private int x, y;
     [SerializeField] private GameState _gameState;
+    [SerializeField] public int houseCost = 600;
+    [SerializeField] public bool houseForSale = false;
+    [SerializeField] public bool houseIsHaunted = false;
+    [SerializeField] public bool youOwnHouse = false;
+    [SerializeField] private GameObject housePrice;
 
     public void Init(bool isOffset, int x, int y, GameState gameState) {
         Debug.Log("Offset " + isOffset);
@@ -44,7 +51,13 @@ public class Tile : MonoBehaviour {
         GameState myGamesState = GameObject.Find("GameState").GetComponent<GameState>();
         Debug.Log("yes game state: " + myGamesState);
         Debug.Log("yes: " + myGamesState.getAddressX() + ", " + myGamesState.getAddressY());
-        
+        if (myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale)
+        {
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale = false;
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).youOwnHouse = true;
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseIsHaunted = false;
+        }
+        myGamesState.deductFunds(myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseCost);
 
         ConfirmationWindow myconfirmationWindow = GameObject.Find("ConfirmationWindowOnCanvas").GetComponent<ConfirmationWindow>();
         myconfirmationWindow.gameObject.SetActive(false);
@@ -53,7 +66,8 @@ public class Tile : MonoBehaviour {
     public void NoClick()
     {
         Debug.Log("no");
-        confirmationWindow.gameObject.SetActive(false);
+        ConfirmationWindow myconfirmationWindow = GameObject.Find("ConfirmationWindowOnCanvas").GetComponent<ConfirmationWindow>();
+        myconfirmationWindow.gameObject.SetActive(false);
     }
 
     private void OnMouseDown()
@@ -61,11 +75,15 @@ public class Tile : MonoBehaviour {
         Debug.Log("mouse down now");
         _gameState.setAddress(x, y);
         isSet = !isSet;
-        ConfirmationWindow[] onlyInactive = FindObjectsByType<ConfirmationWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
-        if (onlyInactive.Length > 0)
+        if (houseForSale)
         {
-            onlyInactive[0].gameObject.SetActive(true);
+            ConfirmationWindow[] onlyInactive = FindObjectsByType<ConfirmationWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
+            if (onlyInactive.Length > 0)
+            {
+                onlyInactive[0].gameObject.SetActive(true);
+            }
         }
+
 
 
         if (isSet)
@@ -76,7 +94,9 @@ public class Tile : MonoBehaviour {
             // alpha.a = 1f;
             // forSale.color = alpha;
             forSale.enabled = true;
+            housePrice.GetComponent<TMP_Text>().text = "foo";
             ghost.enabled = true;
+            houseForSale = true;
         } else
         {
             // Color alpha = forSale.color;
@@ -84,6 +104,7 @@ public class Tile : MonoBehaviour {
             // forSale.color = alpha; 
             forSale.enabled = false;           
             ghost.enabled = false;
+            houseForSale = false;
         }
         
         

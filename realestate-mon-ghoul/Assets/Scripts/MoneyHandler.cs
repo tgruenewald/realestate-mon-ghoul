@@ -7,17 +7,23 @@ using System;
 
 public class MoneyHandler : MonoBehaviour
 {
+    [SerializeField] private GameState gameState;
     public TMP_Text moneyAmount;
-    public int priceMin = 0;
-    public int priceMax = 100;
-    public int startingMoney = 0;
-    private int currMoney = 0;
+
+
     void Start (){
-        currMoney = startingMoney;
-        moneyAmount.text = currMoney.ToString();
+        
+    }
+    void Update()
+    {
+        if (gameState != null)
+        {
+            moneyAmount.text = gameState.getFunds().ToString();
+        }
+
     }
     public void PurchaseGhost(int price){
-         currMoney = currMoney - price;
-         moneyAmount.text = currMoney.ToString();
+        gameState.deductFunds(price);
+        moneyAmount.text = gameState.getFunds().ToString();
     }
 }
