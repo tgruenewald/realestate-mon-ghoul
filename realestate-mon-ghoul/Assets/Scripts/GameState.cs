@@ -14,6 +14,8 @@ public class GameState : MonoBehaviour
     private Dictionary<Vector2, Tile> _tiles;
     [SerializeField] public bool playerAction = true;
     [SerializeField] private int rentIncome = 20;
+    [SerializeField] private int rentalChanceDeduction = 50;
+    [SerializeField] private int houseReducePrice = 20;
     Queue<Tile> hauntedHouses = new Queue<Tile>();
     Tile targetedHouse = null;
     Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint) DateTime.UtcNow.Ticks);
@@ -43,11 +45,11 @@ public class GameState : MonoBehaviour
                     funds += rentIncome;
                     Debug.Log("Rental income");
                     int randomNumber = random.NextInt(1, 12);
-                    if (randomNumber >= 2 && randomNumber <= 5)
+                    if (randomNumber >= 2 && randomNumber <= 8)
                     {
                         // deduct some amount
                         Debug.Log("Deducting");
-                        funds -= 50;
+                        funds -= rentalChanceDeduction;
 
                         // TODO: this will later need to repose the house if it falls below zero
                         if (funds <= 0)
@@ -62,7 +64,7 @@ public class GameState : MonoBehaviour
                 // Reduce house price
                 if (tile.houseForSale)
                 {
-                    tile.reduceHousePrice(10);
+                    tile.reduceHousePrice(houseReducePrice);
                 }
 
                 // Reduce the haunt level of each house

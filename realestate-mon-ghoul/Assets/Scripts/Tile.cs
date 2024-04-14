@@ -16,7 +16,8 @@ public class Tile : MonoBehaviour {
     [SerializeField] private ConfirmationWindow confirmationWindow;
     [SerializeField] public int x, y;
     [SerializeField] private GameState _gameState;
-    [SerializeField] public int houseCost = 600;
+    [SerializeField] public int houseCost = 300;
+    private int originalHousePrice;
     [SerializeField] public bool houseForSale = false;
     [SerializeField] public bool houseIsHaunted = false;
     [SerializeField] public bool ghostDusterAreThere = false;
@@ -25,6 +26,7 @@ public class Tile : MonoBehaviour {
     [SerializeField] public GameObject housePrice;
 
     public void Init(bool isOffset, int x, int y, GameState gameState) {
+        originalHousePrice = houseCost;
         this.x = x;
         this.y = y;
         this._gameState = gameState;
@@ -97,7 +99,7 @@ public class Tile : MonoBehaviour {
     public void houseOffMarket()
     {
         housePrice.GetComponent<TMP_Text>().text = "";
-        houseCost = 600;
+        houseCost = originalHousePrice;
         houseForSale = false;
         hauntLevel = 0;
         forSale.enabled = false;

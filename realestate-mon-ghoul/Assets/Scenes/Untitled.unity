@@ -731,11 +731,11 @@ PrefabInstance:
       objectReference: {fileID: 108305106}
     - target: {fileID: 1380735455121565034, guid: ce284e46483533d43a59e43ebddffd04, type: 3}
       propertyPath: _width
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1380735455121565034, guid: ce284e46483533d43a59e43ebddffd04, type: 3}
       propertyPath: _height
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1380735455121565034, guid: ce284e46483533d43a59e43ebddffd04, type: 3}
       propertyPath: _gameState
@@ -804,7 +804,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 457625179029741174, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
       propertyPath: funds
-      value: 3000
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 457625179029741174, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
+      propertyPath: rentIncome
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 457625179029741174, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
+      propertyPath: houseReducePrice
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 457625179029741174, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
+      propertyPath: rentalChanceDeduction
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 936615607804429511, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
       propertyPath: m_LocalPosition.x
