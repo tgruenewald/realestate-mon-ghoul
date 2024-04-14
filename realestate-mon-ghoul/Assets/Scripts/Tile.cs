@@ -13,6 +13,7 @@ public class Tile : MonoBehaviour {
     [SerializeField] private SpriteRenderer forSale;
     [SerializeField] private SpriteRenderer ghost;
     [SerializeField] private SpriteRenderer ghostDuster;
+    [SerializeField] private SpriteRenderer rental;
     [SerializeField] private ConfirmationWindow confirmationWindow;
     [SerializeField] public int x, y;
     [SerializeField] private GameState _gameState;
@@ -97,8 +98,10 @@ public class Tile : MonoBehaviour {
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale = false;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).youOwnHouse = true;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseIsHaunted = false;
-            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).housePrice.GetComponent<TMP_Text>().text = "Rent";
-            
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).housePrice.GetComponent<TMP_Text>().text = "";
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).rental.enabled = true;
+
+
 
         }
         
@@ -118,6 +121,7 @@ public class Tile : MonoBehaviour {
     public void houseOffMarket()
     {
         housePrice.GetComponent<TMP_Text>().text = "";
+        rental.enabled = false;
         houseCost = originalHousePrice;
         houseForSale = false;
         houseIsHaunted = false;
@@ -220,7 +224,7 @@ public class Tile : MonoBehaviour {
         }
         Debug.Log("mouse down now2");
         _gameState.setAddress(x, y);
-        if (houseForSale)
+        if (houseForSale && _gameState.getFunds() > houseCost)
         {
             ConfirmationWindow[] onlyInactive = FindObjectsByType<ConfirmationWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
             if (onlyInactive.Length > 0)

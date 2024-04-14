@@ -31,9 +31,13 @@ public class MoneyHandler : MonoBehaviour
                 gameState.playerAction = false;
             } else
             {
-                gameState.setGhostLevel(price);
-                gameState.deductFunds(price);
-                moneyAmount.text = gameState.getFunds().ToString();
+                if (gameState.getFunds() > price)
+                {
+                    gameState.setGhostLevel(price);
+                    gameState.deductFunds(price);
+                    moneyAmount.text = gameState.getFunds().ToString();
+                }
+
             }
 
         }
