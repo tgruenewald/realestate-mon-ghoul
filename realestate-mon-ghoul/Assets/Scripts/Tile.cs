@@ -72,12 +72,15 @@ public class Tile : MonoBehaviour {
         housePrice.GetComponent<TMP_Text>().text = "";
         if (myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale)
         {
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseOffMarket();
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale = false;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).youOwnHouse = true;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseIsHaunted = false;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).housePrice.GetComponent<TMP_Text>().text = "Rent";
+            myGamesState.deductFunds(myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseCost);
+
         }
-        myGamesState.deductFunds(myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseCost);
+        
 
         ConfirmationWindow myconfirmationWindow = GameObject.Find("ConfirmationWindowOnCanvas").GetComponent<ConfirmationWindow>();
         myconfirmationWindow.gameObject.SetActive(false);
@@ -91,7 +94,7 @@ public class Tile : MonoBehaviour {
         myconfirmationWindow.gameObject.SetActive(false);
     }
 
-    private void houseOffMarket()
+    public void houseOffMarket()
     {
         housePrice.GetComponent<TMP_Text>().text = "";
         houseCost = 600;
@@ -190,6 +193,7 @@ public class Tile : MonoBehaviour {
             return;
         }
         Debug.Log("mouse down now2");
+        _gameState.setAddress(x, y);
         if (houseForSale)
         {
             ConfirmationWindow[] onlyInactive = FindObjectsByType<ConfirmationWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
@@ -208,35 +212,15 @@ public class Tile : MonoBehaviour {
         // TODO: I'll need to use the ghost level to set a different sprite
         _gameState.resetGhostLevel();
 
-        _gameState.setAddress(x, y);
-        isSet = !isSet;
+        forSale.enabled = true;
+        housePrice.GetComponent<TMP_Text>().text = "" + houseCost;
+        houseForSale = true;
+        ghost.enabled = true;
+        houseForSale = true;
+        houseIsHaunted = true;
+        _gameState.hauntHouse(this);
 
 
-
-
-        if (isSet)
-        {
-            
-
-            // Color alpha = forSale.color;
-            // alpha.a = 1f;
-            // forSale.color = alpha;
-            forSale.enabled = true;
-            housePrice.GetComponent<TMP_Text>().text = "" + houseCost;
-            houseForSale = true;
-            ghost.enabled = true;
-            houseForSale = true;
-            houseIsHaunted = true;
-            _gameState.hauntHouse(this);
-        } else
-        {
-            // Color alpha = forSale.color;
-            // alpha.a = 0f;
-            // forSale.color = alpha; 
-            forSale.enabled = false;           
-            ghost.enabled = false;
-            houseForSale = false;
-        }
         _gameState.playerAction = false;
 
     }

@@ -13,7 +13,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private int ghostLevel = 0;
     private Dictionary<Vector2, Tile> _tiles;
     [SerializeField] public bool playerAction = true;
-    [SerializeField] private int rentIncome = 100;
+    [SerializeField] private int rentIncome = 20;
     Queue<Tile> hauntedHouses = new Queue<Tile>();
     Tile targetedHouse = null;
     Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint) DateTime.UtcNow.Ticks);
@@ -47,9 +47,15 @@ public class GameState : MonoBehaviour
                     {
                         // deduct some amount
                         Debug.Log("Deducting");
-                        funds -= 10;
+                        funds -= 50;
 
                         // TODO: this will later need to repose the house if it falls below zero
+                        if (funds <= 0)
+                        {
+                            funds = 0;
+                            // reposses house
+                            tile.houseOffMarket();
+                        }
                     }
                 }
 
@@ -80,7 +86,9 @@ public class GameState : MonoBehaviour
         int moves = random.NextInt(1, 6);
         for (int i = 0; i < moves; i++)
         {
+
             Debug.Log("Starting turn: " + i + " of " + moves);
+
             // Move the ghostdusters
             if (hauntedHouses.Count > 0 && targetedHouse == null)
             {
@@ -89,12 +97,19 @@ public class GameState : MonoBehaviour
                 Debug.Log("Targeted house is " + targetedHouse.x + ", " + targetedHouse.y);
             }
 
+
             if (targetedHouse == null)
             {
                 // return home
                 Debug.Log("Heading home");
                 Tile ghostDuster = findGhostDuster();
                 moveToCloserHouse(ghostDuster, getTile(0, 0));
+            }
+
+            if (targetedHouse != null && !targetedHouse.houseIsHaunted)
+            {
+                // house is no longer haunted (possibly bought)
+                targetedHouse = null;
             }
 
             if (targetedHouse != null && targetedHouse.houseIsHaunted && !targetedHouse.ghostDusterAreThere)
@@ -114,7 +129,7 @@ public class GameState : MonoBehaviour
                     targetedHouse = null;
                 }
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
