@@ -16,6 +16,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private int rentIncome = 20;
     [SerializeField] private int rentalChanceDeduction = 50;
     [SerializeField] private int houseReducePrice = 20;
+    private int previousRentCount = 0;
     Queue<Tile> hauntedHouses = new Queue<Tile>();
     Tile targetedHouse = null;
     Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint) DateTime.UtcNow.Ticks);
@@ -36,6 +37,7 @@ public class GameState : MonoBehaviour
 
         if (!playerAction)
         {
+            adjustHomeValues();
             // do some things
             // for each property calculate rent
             foreach (var tile in _tiles.Values)
@@ -89,6 +91,32 @@ public class GameState : MonoBehaviour
 
         }
         
+    }
+
+    private void adjustHomeValues()
+    {
+        int rentCount = 0;
+        foreach (var tile in _tiles.Values)
+        {
+            if (tile.youOwnHouse)
+            {
+                rentCount++;
+            }
+        }
+        Debug.Log("rent count is " + rentCount);
+        if (rentCount > previousRentCount)
+        {
+            int diff = rentCount - previousRentCount;
+            previousRentCount = rentCount;
+            foreach (var tile in _tiles.Values)
+            {
+                if (!tile.houseForSale)
+                {
+                    tile.increaseHousePrice(diff * 100);
+                }
+            }
+        }
+
     }
 
     IEnumerator ghostDusterTurn()

@@ -48,6 +48,12 @@ public class Tile : MonoBehaviour {
         }
     }
 
+    public void increaseHousePrice(int price)
+    {
+        houseCost = houseCost + price;
+        originalHousePrice = houseCost;
+    }
+
     void OnMouseEnter() {
         //_highlight.SetActive(true);
     }
