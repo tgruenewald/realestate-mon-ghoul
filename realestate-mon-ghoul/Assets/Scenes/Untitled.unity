@@ -320,9 +320,21 @@ PrefabInstance:
       value: sidebarBackground
       objectReference: {fileID: 0}
     - target: {fileID: 8647454081604623420, guid: 939815ef5cd1dff4589b0d42becf2f79, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1258942446}
+    - target: {fileID: 8647454081604623420, guid: 939815ef5cd1dff4589b0d42becf2f79, type: 3}
       propertyPath: gameState
       value: 
       objectReference: {fileID: 465917417}
+    - target: {fileID: 8647454081604623420, guid: 939815ef5cd1dff4589b0d42becf2f79, type: 3}
+      propertyPath: floatingText
+      value: 
+      objectReference: {fileID: 8269283976876176134, guid: ed02601102a388546a1c1a6517b3e409, type: 3}
+    - target: {fileID: 8916334248660829679, guid: 939815ef5cd1dff4589b0d42becf2f79, type: 3}
+      propertyPath: floatingText
+      value: 
+      objectReference: {fileID: 8269283976876176134, guid: ed02601102a388546a1c1a6517b3e409, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

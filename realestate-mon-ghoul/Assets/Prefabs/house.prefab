@@ -438,6 +438,8 @@ MonoBehaviour:
   ghost: {fileID: 1737396846403566279}
   ghostDuster: {fileID: 6373678876618388270}
   rental: {fileID: 2163038905716436802}
+  floatingText: {fileID: 4714772171200289909, guid: a19211dfeaa88b64a989db0662568417, type: 3}
+  canvas: {fileID: 89861926253124082}
   confirmationWindow: {fileID: 381427182137008449, guid: 5891a17b14de260458b988bb0750557c, type: 3}
   x: 0
   y: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class Tile : MonoBehaviour {
     [SerializeField] private SpriteRenderer ghost;
     [SerializeField] private SpriteRenderer ghostDuster;
     [SerializeField] private SpriteRenderer rental;
+    [SerializeField] private GameObject floatingText;
+    [SerializeField] private GameObject canvas;
     [SerializeField] private ConfirmationWindow confirmationWindow;
     [SerializeField] public int x, y;
     [SerializeField] private GameState _gameState;
@@ -85,6 +88,20 @@ public class Tile : MonoBehaviour {
         return ghostDusterCar;
     }
 
+    public void CreateFloatingText(string text)
+    {
+        Debug.Log("Creating floating text: " + text);
+        var myText = Instantiate(floatingText, housePrice.transform);
+        myText.transform.SetParent(canvas.transform, false);
+        //myText.transform.position = new Vector2(housePrice.transform.position.x, housePrice.transform.position.y - 8f);
+        myText.transform.position = housePrice.transform.position;
+        myText.transform.Translate(0, -1f, 0, Space.Self);
+        myText.transform.localScale = housePrice.transform.localScale;
+        //myText.GetComponent<TMP_Text>().transform.position = transform.position;
+        //myText.transform.localPosition = housePrice.transform.localPosition;
+
+    }
+
     public void YesClick()
     {
         GameState myGamesState = GameObject.Find("GameState").GetComponent<GameState>();
@@ -100,7 +117,7 @@ public class Tile : MonoBehaviour {
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseIsHaunted = false;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).housePrice.GetComponent<TMP_Text>().text = "";
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).rental.enabled = true;
-
+            myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).CreateFloatingText("Bought");
 
 
         }
@@ -217,6 +234,7 @@ public class Tile : MonoBehaviour {
 
     private void OnMouseDown()
     {
+        CreateFloatingText("Clicked");
         if (!_gameState.playerAction)
         {
             Debug.Log("not players turn");
