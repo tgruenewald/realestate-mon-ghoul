@@ -24,6 +24,8 @@ public class Tile : MonoBehaviour {
     [SerializeField] public bool youOwnHouse = false;
     [SerializeField] public int hauntLevel = 0;
     [SerializeField] public GameObject housePrice;
+    [SerializeField] private GhostDuster ghostDusterCar;
+
 
     public void Init(bool isOffset, int x, int y, GameState gameState) {
         originalHousePrice = houseCost;
@@ -40,6 +42,8 @@ public class Tile : MonoBehaviour {
             // ghostduster initial home
             ghostDuster.enabled = true;
             ghostDusterAreThere = true;
+            ghostDusterCar = new GhostDuster();
+            ghostDusterCar.setHome(x, y);
 
         }
     }
@@ -53,17 +57,25 @@ public class Tile : MonoBehaviour {
         //_highlight.SetActive(false);
     }
 
-    public void setGhostDuster()
+    public void setGhostDuster(GhostDuster car)
     {
-        Debug.Log("Moving to " + x + ", " + y);
         ghostDuster.enabled = true;
         ghostDusterAreThere = true;
+        ghostDusterCar = car;
     }
 
-    public void removeGhostDuster()
+    public GhostDuster removeGhostDuster()
     {
+        GhostDuster temp = ghostDusterCar;
+        ghostDusterCar = null;
         ghostDuster.enabled = false;
         ghostDusterAreThere = false;
+        return temp;
+    }
+
+    public GhostDuster getGhostDusterCar()
+    {
+        return ghostDusterCar;
     }
 
     public void YesClick()
@@ -74,12 +86,13 @@ public class Tile : MonoBehaviour {
         housePrice.GetComponent<TMP_Text>().text = "";
         if (myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale)
         {
+            myGamesState.deductFunds(myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseCost);
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseOffMarket();
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseForSale = false;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).youOwnHouse = true;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseIsHaunted = false;
             myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).housePrice.GetComponent<TMP_Text>().text = "Rent";
-            myGamesState.deductFunds(myGamesState.getTile(myGamesState.getAddressX(), myGamesState.getAddressY()).houseCost);
+            
 
         }
         
@@ -101,6 +114,7 @@ public class Tile : MonoBehaviour {
         housePrice.GetComponent<TMP_Text>().text = "";
         houseCost = originalHousePrice;
         houseForSale = false;
+        houseIsHaunted = false;
         hauntLevel = 0;
         forSale.enabled = false;
         ghost.enabled = false;
@@ -109,6 +123,7 @@ public class Tile : MonoBehaviour {
     public void reduceHousePrice(int price)
     {
         houseCost -= price;
+        Debug.Log("House reduced to " + houseCost);
         if (houseCost < 101)
         {
             // house goes off market is and no longer for sale
@@ -126,9 +141,10 @@ public class Tile : MonoBehaviour {
     {
         if (hauntLevel == 10)
         {
-            if (randomNumber >= 1 && randomNumber <= 10)
+            if (randomNumber >= 1 && randomNumber <= 3 + ghostDusterCar.getXP(10))
             {
                 Debug.Log("House is no longer haunted");
+                ghostDusterCar.increaseXP(10);
                 houseOffMarket();
                 return true;
 
@@ -138,10 +154,11 @@ public class Tile : MonoBehaviour {
                 Debug.Log("House is still haunted");
                 return false;
             }
-        } else if (hauntLevel == 50) {
-            if (randomNumber >= 10 && randomNumber <= 15)
+        } else if (hauntLevel == 100) {
+            if (randomNumber >= 10 && randomNumber <= 11 + ghostDusterCar.getXP(100))
             {
                 Debug.Log("House is no longer haunted");
+                ghostDusterCar.increaseXP(100);
                 houseOffMarket();
                 return true;
 
@@ -151,11 +168,12 @@ public class Tile : MonoBehaviour {
                 Debug.Log("House is still haunted");
                 return false;
             }
-        } else if (hauntLevel == 100)
+        } else if (hauntLevel == 1000)
         {
-            if (randomNumber >= 2 && randomNumber <= 3)
+            if (randomNumber >= 2 && randomNumber <= 2 + ghostDusterCar.getXP(1000))
             {
                 Debug.Log("House is no longer haunted");
+                ghostDusterCar.increaseXP(1000);
                 houseOffMarket();
                 return true;
 

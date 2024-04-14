@@ -440,7 +440,7 @@ MonoBehaviour:
   x: 0
   y: 0
   _gameState: {fileID: 0}
-  houseCost: 300
+  houseCost: 1000
   houseForSale: 0
   houseIsHaunted: 0
   ghostDusterAreThere: 0
