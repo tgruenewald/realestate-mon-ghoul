@@ -14,11 +14,12 @@ public class Tile : MonoBehaviour {
     [SerializeField] private SpriteRenderer ghost;
     [SerializeField] private SpriteRenderer ghostDuster;
     [SerializeField] private ConfirmationWindow confirmationWindow;
-    [SerializeField] private int x, y;
+    [SerializeField] public int x, y;
     [SerializeField] private GameState _gameState;
     [SerializeField] public int houseCost = 600;
     [SerializeField] public bool houseForSale = false;
     [SerializeField] public bool houseIsHaunted = false;
+    [SerializeField] public bool ghostDusterAreThere = false;
     [SerializeField] public bool youOwnHouse = false;
     [SerializeField] public int hauntLevel = 0;
     [SerializeField] public GameObject housePrice;
@@ -36,6 +37,7 @@ public class Tile : MonoBehaviour {
         {
             // ghostduster initial home
             ghostDuster.enabled = true;
+            ghostDusterAreThere = true;
 
         }
     }
@@ -47,6 +49,19 @@ public class Tile : MonoBehaviour {
     void OnMouseExit()
     {
         //_highlight.SetActive(false);
+    }
+
+    public void setGhostDuster()
+    {
+        Debug.Log("Moving to " + x + ", " + y);
+        ghostDuster.enabled = true;
+        ghostDusterAreThere = true;
+    }
+
+    public void removeGhostDuster()
+    {
+        ghostDuster.enabled = false;
+        ghostDusterAreThere = false;
     }
 
     public void YesClick()
@@ -76,24 +91,94 @@ public class Tile : MonoBehaviour {
         myconfirmationWindow.gameObject.SetActive(false);
     }
 
+    private void houseOffMarket()
+    {
+        housePrice.GetComponent<TMP_Text>().text = "";
+        houseCost = 600;
+        houseForSale = false;
+        hauntLevel = 0;
+        forSale.enabled = false;
+        ghost.enabled = false;
+    }
+
     public void reduceHousePrice(int price)
     {
         houseCost -= price;
         if (houseCost < 101)
         {
             // house goes off market is and no longer for sale
-            housePrice.GetComponent<TMP_Text>().text = "";
-            houseCost = 600;
-            houseForSale = false;
-            hauntLevel = 0;
-            forSale.enabled = false;
-            ghost.enabled = false;
+            houseOffMarket();
 
         } else
         {
             housePrice.GetComponent<TMP_Text>().text = "" + houseCost;
         }
 
+
+    }
+
+    public bool exorcise(int randomNumber)
+    {
+        if (hauntLevel == 10)
+        {
+            if (randomNumber >= 1 && randomNumber <= 10)
+            {
+                Debug.Log("House is no longer haunted");
+                houseOffMarket();
+                return true;
+
+            }
+            else
+            {
+                Debug.Log("House is still haunted");
+                return false;
+            }
+        } else if (hauntLevel == 50) {
+            if (randomNumber >= 10 && randomNumber <= 15)
+            {
+                Debug.Log("House is no longer haunted");
+                houseOffMarket();
+                return true;
+
+            }
+            else
+            {
+                Debug.Log("House is still haunted");
+                return false;
+            }
+        } else if (hauntLevel == 100)
+        {
+            if (randomNumber >= 2 && randomNumber <= 3)
+            {
+                Debug.Log("House is no longer haunted");
+                houseOffMarket();
+                return true;
+
+            }
+            else
+            {
+                Debug.Log("House is still haunted");
+                return false;
+            }
+        } else if (hauntLevel > 0)
+        {
+            // shouldn't be possible
+            if (randomNumber >= 2 && randomNumber <= 15)
+            {
+                Debug.Log("House is no longer haunted");
+                houseOffMarket();
+                return true;
+
+            }
+            else
+            {
+                Debug.Log("House is still haunted");
+                return false;
+            }
+        } else
+        {
+            return true;
+        }
 
     }
 
@@ -141,6 +226,8 @@ public class Tile : MonoBehaviour {
             houseForSale = true;
             ghost.enabled = true;
             houseForSale = true;
+            houseIsHaunted = true;
+            _gameState.hauntHouse(this);
         } else
         {
             // Color alpha = forSale.color;
