@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour {
     [SerializeField] private Color _originalColor;
     [SerializeField] private SpriteRenderer forSale;
     [SerializeField] private SpriteRenderer ghost;
+    [SerializeField] private SpriteRenderer ghostDuster;
     [SerializeField] private ConfirmationWindow confirmationWindow;
     [SerializeField] private int x, y;
     [SerializeField] private GameState _gameState;
@@ -31,6 +32,12 @@ public class Tile : MonoBehaviour {
         confirmationWindow.yesButton.onClick.AddListener(YesClick);
         confirmationWindow.noButton.onClick.AddListener(NoClick);
         confirmationWindow.gameObject.SetActive(false);
+        if (x == 0 && y == 0)
+        {
+            // ghostduster initial home
+            ghostDuster.enabled = true;
+
+        }
     }
 
     void OnMouseEnter() {
