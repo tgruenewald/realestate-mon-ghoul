@@ -23,8 +23,20 @@ public class MoneyHandler : MonoBehaviour
 
     }
     public void PurchaseGhost(int price){
-        gameState.setGhostLevel(price);
-        gameState.deductFunds(price);
-        moneyAmount.text = gameState.getFunds().ToString();
+        if (gameState.playerAction)
+        {
+            if (price == 0)
+            {
+                Debug.Log("Skipping turn");
+                gameState.playerAction = false;
+            } else
+            {
+                gameState.setGhostLevel(price);
+                gameState.deductFunds(price);
+                moneyAmount.text = gameState.getFunds().ToString();
+            }
+
+        }
+
     }
 }

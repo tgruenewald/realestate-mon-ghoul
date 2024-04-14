@@ -19,31 +19,27 @@ public class Tile : MonoBehaviour {
     [SerializeField] public bool houseForSale = false;
     [SerializeField] public bool houseIsHaunted = false;
     [SerializeField] public bool youOwnHouse = false;
+    [SerializeField] public int hauntLevel = 0;
     [SerializeField] public GameObject housePrice;
 
     public void Init(bool isOffset, int x, int y, GameState gameState) {
-        Debug.Log("Offset " + isOffset);
         this.x = x;
         this.y = y;
         this._gameState = gameState;
-        Debug.Log("gamestate: " +  gameState);
         _renderer.color = isOffset ? _offsetColor : _baseColor;
         _originalColor = _renderer.color;
         confirmationWindow.yesButton.onClick.AddListener(YesClick);
         confirmationWindow.noButton.onClick.AddListener(NoClick);
         confirmationWindow.gameObject.SetActive(false);
-        Debug.Log("confirmation window: " + confirmationWindow.gameObject);
     }
 
     void OnMouseEnter() {
         //_highlight.SetActive(true);
-        Debug.Log("Mouse enter");
     }
 
     void OnMouseExit()
     {
         //_highlight.SetActive(false);
-        Debug.Log("Mouse exit!");
     }
 
     public void YesClick()
@@ -63,6 +59,7 @@ public class Tile : MonoBehaviour {
 
         ConfirmationWindow myconfirmationWindow = GameObject.Find("ConfirmationWindowOnCanvas").GetComponent<ConfirmationWindow>();
         myconfirmationWindow.gameObject.SetActive(false);
+        myGamesState.playerAction = false;
     }
 
     public void NoClick()
@@ -72,8 +69,34 @@ public class Tile : MonoBehaviour {
         myconfirmationWindow.gameObject.SetActive(false);
     }
 
+    public void reduceHousePrice(int price)
+    {
+        houseCost -= price;
+        if (houseCost < 101)
+        {
+            // house goes off market is and no longer for sale
+            housePrice.GetComponent<TMP_Text>().text = "";
+            houseCost = 600;
+            houseForSale = false;
+            hauntLevel = 0;
+            forSale.enabled = false;
+            ghost.enabled = false;
+
+        } else
+        {
+            housePrice.GetComponent<TMP_Text>().text = "" + houseCost;
+        }
+
+
+    }
+
     private void OnMouseDown()
     {
+        if (!_gameState.playerAction)
+        {
+            Debug.Log("not players turn");
+            return;
+        }
         Debug.Log("mouse down now2");
         if (houseForSale)
         {
@@ -89,7 +112,7 @@ public class Tile : MonoBehaviour {
             Debug.Log("ghost level is zero");
             return;
         }
-
+        hauntLevel = _gameState.getGhostLevel();
         // TODO: I'll need to use the ghost level to set a different sprite
         _gameState.resetGhostLevel();
 
@@ -120,7 +143,7 @@ public class Tile : MonoBehaviour {
             ghost.enabled = false;
             houseForSale = false;
         }
-        
-        
+        _gameState.playerAction = false;
+
     }
 }
