@@ -16,15 +16,23 @@ public class GameState : MonoBehaviour
     [SerializeField] private int rentIncome = 20;
     [SerializeField] private int rentalChanceDeduction = 50;
     [SerializeField] private int houseReducePrice = 20;
+    [SerializeField] public int maxTurns = 2000;
+    private string hintMessage;
+    public int turnNumber = 1;
     private int previousRentCount = 0;
     Queue<Tile> hauntedHouses = new Queue<Tile>();
     Tile targetedHouse = null;
     Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint) DateTime.UtcNow.Ticks);
 
     // Start is called before the first frame update
-    void Start()
+    public string getHint()
     {
-        
+        return hintMessage;
+    }
+
+    public void setHint(String hint)
+    {
+        hintMessage = hint;
     }
 
     // Update is called once per frame
@@ -34,23 +42,41 @@ public class GameState : MonoBehaviour
         {
             _tiles = new Dictionary<Vector2, Tile>();
         }
+        if (didWin())
+        {
+            setHint("You won!!!");
+            return;
+        }
 
         if (!playerAction)
         {
+            turnNumber++;
+            hintMessage = "Ghost Dusters turn";
+
+
             adjustHomeValues();
             // do some things
             // for each property calculate rent
             foreach (var tile in _tiles.Values)
             {
+                if (turnNumber > maxTurns)
+                {
+                    // game over
+                    tile.CreateFloatingText("Game over");
+                    break;
+                }
+
+
+
                 if (tile.youOwnHouse)
                 {
-                    funds += rentIncome;
-                    Debug.Log("Rental income: " + rentIncome);
+
                     int randomNumber = random.NextInt(1, 12);
-                    if (randomNumber >= 2 && randomNumber <= 8)
+                    if (randomNumber >= 1 && randomNumber <= 3)
                     {
                         // deduct some amount
                         Debug.Log("Deducting");
+                        tile.CreateFloatingText("-$ :(");
                         funds -= rentalChanceDeduction;
 
                         // TODO: this will later need to repose the house if it falls below zero
@@ -58,8 +84,15 @@ public class GameState : MonoBehaviour
                         {
                             funds = 0;
                             // reposses house
+                            tile.CreateFloatingText("Reposseed");
                             tile.houseOffMarket();
                         }
+                    } else
+                    {
+                        // rent
+                        funds += rentIncome;
+                        Debug.Log("Rental income: " + rentIncome);
+                        tile.CreateFloatingText("$");
                     }
                 }
 
@@ -88,9 +121,21 @@ public class GameState : MonoBehaviour
 
             // Now it is players turn
             playerAction = true;
-
+            hintMessage = "Your turn now";
         }
         
+    }
+
+    private bool didWin()
+    {
+        foreach (var tile in _tiles.Values)
+        {
+            if (!tile.youOwnHouse)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void adjustHomeValues()
@@ -121,7 +166,7 @@ public class GameState : MonoBehaviour
 
     IEnumerator ghostDusterTurn()
     {
-        int moves = random.NextInt(1, 6);
+        int moves = random.NextInt(1, 3);
         for (int i = 0; i < moves; i++)
         {
 

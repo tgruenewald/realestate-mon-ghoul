@@ -39,11 +39,46 @@ public class GhostDuster
         Debug.Log("For " + hauntLevel + ", xp is " + xp[hauntLevel]);
     }
 
+    private int maxOutXP(int hauntLevel)
+    {
+        int exper = xp[hauntLevel];
+        switch(hauntLevel)
+        {
+            case 10:
+                if (exper > 10)
+                {
+                    return 10;
+                } else
+                {
+                    return exper;
+                }
+            case 100:
+                if (exper > 5)
+                {
+                    return 5;
+                }
+                else
+                {
+                    return exper;
+                }
+            case 1000:
+                if (exper > 3)
+                {
+                    return 3;
+                }
+                else
+                {
+                    return exper;
+                }
+        }
+        return exper;
+    }
+
     public int getXP(int hauntLevel)
     {
         if (xp.ContainsKey(hauntLevel))
         {
-            return xp[hauntLevel];
+            return maxOutXP(hauntLevel);
         }
         return 0;
     }

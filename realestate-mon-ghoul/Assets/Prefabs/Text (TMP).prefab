@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2363670087757555884}
   - component: {fileID: 2341100751266072035}
   - component: {fileID: 8525539560793493942}
-  - component: {fileID: 6827695730233729958}
+  - component: {fileID: 5638924466622530367}
+  - component: {fileID: 490718584203193310}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -75,7 +76,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 1107296255
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -93,8 +94,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -137,18 +138,31 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!111 &6827695730233729958
+--- !u!114 &5638924466622530367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714772171200289909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17daff975bec71d46b058d9382daca6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 1
+--- !u!111 &490718584203193310
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4714772171200289909}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 2052941e643f20d47b4ee150b49ce259, type: 2}
+  m_Animation: {fileID: 7400000, guid: cb613708390072b43a2461394c28bbd7, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 2052941e643f20d47b4ee150b49ce259, type: 2}
+  - {fileID: 7400000, guid: cb613708390072b43a2461394c28bbd7, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0

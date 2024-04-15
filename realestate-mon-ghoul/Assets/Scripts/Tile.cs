@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Tile : MonoBehaviour {
     [SerializeField] private Color _baseColor, _offsetColor;
@@ -29,6 +30,7 @@ public class Tile : MonoBehaviour {
     [SerializeField] public int hauntLevel = 0;
     [SerializeField] public GameObject housePrice;
     [SerializeField] private GhostDuster ghostDusterCar;
+    private Queue<string> floatingMessagesQueues = new Queue<string>();
 
 
     public void Init(bool isOffset, int x, int y, GameState gameState) {
@@ -50,6 +52,7 @@ public class Tile : MonoBehaviour {
             ghostDusterCar.setHome(x, y);
 
         }
+        StartCoroutine(DoFloatingTextAfterTime());
     }
 
     public void increaseHousePrice(int price)
@@ -88,17 +91,34 @@ public class Tile : MonoBehaviour {
         return ghostDusterCar;
     }
 
+
+    private IEnumerator DoFloatingTextAfterTime()
+    {
+        while (true)
+        {
+            if (floatingMessagesQueues.Count > 0)
+            {
+                string text = floatingMessagesQueues.Dequeue();
+                Debug.Log("Creating floating text: " + text);
+                var myText = Instantiate(floatingText, housePrice.transform);
+                myText.GetComponent<TMP_Text>().text = text;
+                myText.transform.SetParent(canvas.transform, false);
+                //myText.transform.position = new Vector2(housePrice.transform.position.x, housePrice.transform.position.y - 8f);
+                myText.transform.position = housePrice.transform.position;
+                myText.transform.Translate(0, -1f, 0, Space.Self);
+                myText.transform.localScale = housePrice.transform.localScale;
+                //myText.GetComponent<TMP_Text>().transform.position = transform.position;
+                //myText.transform.localPosition = housePrice.transform.localPosition;
+            }
+            yield return new WaitForSeconds(0.2f);  // Wait for the specified duration
+        }
+        
+
+    }
+
     public void CreateFloatingText(string text)
     {
-        Debug.Log("Creating floating text: " + text);
-        var myText = Instantiate(floatingText, housePrice.transform);
-        myText.transform.SetParent(canvas.transform, false);
-        //myText.transform.position = new Vector2(housePrice.transform.position.x, housePrice.transform.position.y - 8f);
-        myText.transform.position = housePrice.transform.position;
-        myText.transform.Translate(0, -1f, 0, Space.Self);
-        myText.transform.localScale = housePrice.transform.localScale;
-        //myText.GetComponent<TMP_Text>().transform.position = transform.position;
-        //myText.transform.localPosition = housePrice.transform.localPosition;
+        floatingMessagesQueues.Enqueue(text);
 
     }
 
@@ -151,6 +171,10 @@ public class Tile : MonoBehaviour {
     {
         houseCost -= price;
         Debug.Log("House reduced to " + houseCost);
+        if (houseCost < 200)
+        {
+            CreateFloatingText("Sale ending");
+        }
         if (houseCost < 101)
         {
             // house goes off market is and no longer for sale
@@ -170,6 +194,7 @@ public class Tile : MonoBehaviour {
         {
             if (randomNumber >= 1 && randomNumber <= 3 + ghostDusterCar.getXP(10))
             {
+                CreateFloatingText("No longer haunted");
                 Debug.Log("House is no longer haunted");
                 ghostDusterCar.increaseXP(10);
                 houseOffMarket();
@@ -179,12 +204,14 @@ public class Tile : MonoBehaviour {
             else
             {
                 Debug.Log("House is still haunted");
+                CreateFloatingText("Removing spirits...");
                 return false;
             }
         } else if (hauntLevel == 100) {
             if (randomNumber >= 10 && randomNumber <= 11 + ghostDusterCar.getXP(100))
             {
                 Debug.Log("House is no longer haunted");
+                CreateFloatingText("No longer haunted");
                 ghostDusterCar.increaseXP(100);
                 houseOffMarket();
                 return true;
@@ -200,6 +227,7 @@ public class Tile : MonoBehaviour {
             if (randomNumber >= 2 && randomNumber <= 2 + ghostDusterCar.getXP(1000))
             {
                 Debug.Log("House is no longer haunted");
+                CreateFloatingText("No longer haunted");
                 ghostDusterCar.increaseXP(1000);
                 houseOffMarket();
                 return true;
@@ -216,6 +244,7 @@ public class Tile : MonoBehaviour {
             if (randomNumber >= 2 && randomNumber <= 15)
             {
                 Debug.Log("House is no longer haunted");
+                CreateFloatingText("No longer haunted");
                 houseOffMarket();
                 return true;
 
@@ -234,7 +263,7 @@ public class Tile : MonoBehaviour {
 
     private void OnMouseDown()
     {
-        CreateFloatingText("Clicked");
+        
         if (!_gameState.playerAction)
         {
             Debug.Log("not players turn");
@@ -244,6 +273,7 @@ public class Tile : MonoBehaviour {
         _gameState.setAddress(x, y);
         if (houseForSale && _gameState.getFunds() > houseCost)
         {
+            CreateFloatingText("Attempting to buy house");
             ConfirmationWindow[] onlyInactive = FindObjectsByType<ConfirmationWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
             if (onlyInactive.Length > 0)
             {
@@ -256,13 +286,22 @@ public class Tile : MonoBehaviour {
             Debug.Log("ghost level is zero");
             return;
         }
+
+        if (youOwnHouse)
+        {
+            return;
+        }
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        _gameState.setHint("Spirit has been summoned");
+        CreateFloatingText("Spirit has been summoned");
         hauntLevel = _gameState.getGhostLevel();
         // TODO: I'll need to use the ghost level to set a different sprite
         _gameState.resetGhostLevel();
-
+        rental.enabled = false;
         forSale.enabled = true;
         housePrice.GetComponent<TMP_Text>().text = "" + houseCost;
         houseForSale = true;
+        youOwnHouse = false;
         ghost.enabled = true;
         houseForSale = true;
         houseIsHaunted = true;
