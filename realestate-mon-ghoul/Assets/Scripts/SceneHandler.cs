@@ -15,5 +15,8 @@ public class SceneHandler : MonoBehaviour
     public void ToWinScreen(){
         SceneManager.LoadScene ("WinScreen");
     }
+    public void ToCreditsScreen(){
+        SceneManager.LoadScene ("Credits");
+    }
     
 }
