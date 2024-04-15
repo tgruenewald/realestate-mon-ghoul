@@ -16,7 +16,8 @@ public class GameState : MonoBehaviour
     [SerializeField] private int rentIncome = 20;
     [SerializeField] private int rentalChanceDeduction = 50;
     [SerializeField] private int houseReducePrice = 20;
-    [SerializeField] public int maxTurns = 2000;
+    [SerializeField] public int maxTurns = 1000;
+    [SerializeField] private AudioSource coinsDropping;
     private string hintMessage;
     public int turnNumber = 1;
     private int previousRentCount = 0;
@@ -93,6 +94,7 @@ public class GameState : MonoBehaviour
                         funds += rentIncome;
                         Debug.Log("Rental income: " + rentIncome);
                         tile.CreateFloatingText("$");
+                        coinsDropping.Play();
                     }
                 }
 

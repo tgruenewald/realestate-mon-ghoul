@@ -47,3 +47,11 @@ MonoBehaviour:
   funds: 0
   houseAddressX: 0
   houseAddressY: 0
+  ghostLevel: 0
+  playerAction: 1
+  rentIncome: 20
+  rentalChanceDeduction: 50
+  houseReducePrice: 20
+  maxTurns: 1000
+  coinsDropping: {fileID: 0}
+  turnNumber: 1
