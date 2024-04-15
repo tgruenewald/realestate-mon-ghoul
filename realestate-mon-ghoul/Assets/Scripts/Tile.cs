@@ -30,6 +30,12 @@ public class Tile : MonoBehaviour {
     [SerializeField] public int hauntLevel = 0;
     [SerializeField] public GameObject housePrice;
     [SerializeField] private GhostDuster ghostDusterCar;
+    [SerializeField] private Sprite childGhostIcon;
+    [SerializeField] private Sprite teenGhostIcon;
+    [SerializeField] private Sprite demonGhostIcon;
+    [SerializeField] private AudioSource beepLow;
+
+
     private Queue<string> floatingMessagesQueues = new Queue<string>();
 
 
@@ -271,7 +277,11 @@ public class Tile : MonoBehaviour {
         }
         Debug.Log("mouse down now2");
         _gameState.setAddress(x, y);
-        if (houseForSale && _gameState.getFunds() > houseCost)
+        if (houseForSale && _gameState.getFunds() < houseCost)
+        {
+            beepLow.Play();
+        }
+        if (houseForSale && _gameState.getFunds() >= houseCost)
         {
             CreateFloatingText("Attempting to buy house");
             ConfirmationWindow[] onlyInactive = FindObjectsByType<ConfirmationWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
@@ -295,7 +305,20 @@ public class Tile : MonoBehaviour {
         _gameState.setHint("Spirit has been summoned");
         CreateFloatingText("Spirit has been summoned");
         hauntLevel = _gameState.getGhostLevel();
+        Debug.Log("HauntLevel: " +  hauntLevel);
         // TODO: I'll need to use the ghost level to set a different sprite
+        if(hauntLevel == 10)
+        {
+            ghost.sprite = childGhostIcon;
+        }else if(hauntLevel == 100)
+        {
+            ghost.sprite = teenGhostIcon;
+        }
+        else
+        {
+            ghost.sprite = demonGhostIcon;
+        }
+
         _gameState.resetGhostLevel();
         rental.enabled = false;
         forSale.enabled = true;
