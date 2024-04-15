@@ -1612,6 +1612,7 @@ PrefabInstance:
     - target: {fileID: 457625179029741174, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
       propertyPath: rentIncome
       value: 10
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 457625179029741174, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
       propertyPath: houseReducePrice
@@ -1619,6 +1620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 457625179029741174, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}
       propertyPath: rentalChanceDeduction
+      value: 5
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 936615607804429511, guid: 67c35be65e973f8468ed38f58191fdd1, type: 3}

@@ -118,6 +118,15 @@ public class GameState : MonoBehaviour
                     targetedHouse = null;
                 }
             }
+            if (targetedHouse != null && targetedHouse.houseIsHaunted && targetedHouse.ghostDusterAreThere)
+            {
+                Debug.Log("Exorcise the house");
+                int randomNumber = random.NextInt(1, 20);
+                if (targetedHouse.exorcise(randomNumber))
+                {
+                    targetedHouse = null;
+                }
+            }
 
             // Now it is players turn
             playerAction = true;
@@ -162,6 +171,7 @@ public class GameState : MonoBehaviour
             }
         }
 
+
     }
 
     IEnumerator ghostDusterTurn()
@@ -182,9 +192,13 @@ public class GameState : MonoBehaviour
 
             Tile ghostDusterTile = findGhostDuster();
             if (targetedHouse == null && !ghostDusterTile.getGhostDusterCar().isHome(ghostDusterTile))
+            Tile ghostDusterTile = findGhostDuster();
+            if (targetedHouse == null && !ghostDusterTile.getGhostDusterCar().isHome(ghostDusterTile))
             {
                 // return home
                 Debug.Log("Heading home");
+                
+                moveToCloserHouse(ghostDusterTile, getTile(0, 0), ghostDusterTile.removeGhostDuster());
                 
                 moveToCloserHouse(ghostDusterTile, getTile(0, 0), ghostDusterTile.removeGhostDuster());
             }
@@ -203,11 +217,17 @@ public class GameState : MonoBehaviour
             }
 
 
+                ghostDusterTile = findGhostDuster();
+                moveToCloserHouse(ghostDusterTile, targetedHouse, ghostDusterTile.removeGhostDuster());
+            }
+
+
             yield return new WaitForSeconds(0.2f);
         }
     }
 
 
+    private void moveToCloserHouse(Tile ghostDuster, Tile hauntedHouse, GhostDuster car)
     private void moveToCloserHouse(Tile ghostDuster, Tile hauntedHouse, GhostDuster car)
     {
         int nextX = System.Math.Abs(ghostDuster.x - hauntedHouse.x);
@@ -219,11 +239,13 @@ public class GameState : MonoBehaviour
                 // move to the left
                 Tile newTile = getTile(ghostDuster.x - 1, ghostDuster.y);
                 newTile.setGhostDuster(car);
+                newTile.setGhostDuster(car);
                 ghostDuster.removeGhostDuster();
             } else
             {
                 // move to the right
                 Tile newTile = getTile(ghostDuster.x + 1, ghostDuster.y);
+                newTile.setGhostDuster(car);
                 newTile.setGhostDuster(car);
                 ghostDuster.removeGhostDuster();
             }
@@ -239,12 +261,14 @@ public class GameState : MonoBehaviour
                 // move down
                 Tile newTile = getTile(ghostDuster.x, ghostDuster.y - 1);
                 newTile.setGhostDuster(car);
+                newTile.setGhostDuster(car);
                 ghostDuster.removeGhostDuster();
             }
             else
             {
                 // move up
                 Tile newTile = getTile(ghostDuster.x, ghostDuster.y + 1);
+                newTile.setGhostDuster(car);
                 newTile.setGhostDuster(car);
                 ghostDuster.removeGhostDuster();
             }
@@ -311,6 +335,7 @@ public class GameState : MonoBehaviour
 
     public void deductFunds(int deduct)
     {
+        Debug.Log("deducting funds: " + deduct + " out of " + funds);
         Debug.Log("deducting funds: " + deduct + " out of " + funds);
         funds = funds - deduct;
     }
